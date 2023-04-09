@@ -1,0 +1,124 @@
+se puede almacenar un puntero en otro puntero en c++?
+Sí, es posible almacenar un puntero en otro puntero en C++.
+
+Un puntero es una variable que almacena una dirección de memoria. Por lo tanto, un puntero puede apuntar a otra variable, incluyendo otro puntero.
+
+Para declarar un puntero a otro puntero en C++, puedes usar el operador de indirección (*) para indicar que el tipo de la variable es un puntero, y agregar más de estos operadores para indicar el número de niveles de indirección necesarios. Por ejemplo:
+
+c++
+Copy code
+int a = 5;
+int* p1 = &a;    // puntero a int
+int** p2 = &p1;  // puntero a puntero a int
+En este ejemplo, p1 es un puntero que apunta a la variable a, mientras que p2 es un puntero que apunta a p1, que a su vez apunta a a. Podemos usar el operador de indirección para acceder al valor de a a través de p2:
+
+c++
+Copy code
+cout << **p2 << endl;  // imprime "5"
+También es posible tener un puntero que no apunte a nada, lo que se llama un puntero nulo. Para declarar un puntero nulo, puedes usar el valor especial nullptr:
+
+c++
+Copy code
+int** p3 = nullptr;  // puntero a puntero nulo
+Es importante tener en cuenta que al trabajar con punteros, debemos asegurarnos de que los punteros apunten a una ubicación de memoria válida antes de intentar acceder al valor al que apuntan. De lo contrario, podemos obtener un comportamiento indefinido y errores en tiempo de ejecución.
+
+
+
+
+Herbert Mayorga
+pero por ejemplo si hago 
+int a = 10
+int b = 10
+int *ptr1 = &a
+int *ptr2 = &b
+
+ptr1 = ptr2, estaria mal?
+No, si asignas ptr1 = ptr2 no estaría mal desde el punto de vista de sintaxis y no se producirá ningún error en tiempo de compilación.
+
+Lo que sucede en esta asignación es que el puntero ptr1 ahora apuntará a la misma dirección de memoria que ptr2, es decir, b. Por lo tanto, después de la asignación, cualquier operación realizada a través de ptr1 afectará a la variable b en lugar de la variable a.
+
+Es importante tener en cuenta que esto puede tener consecuencias no deseadas en el código, por lo que debes tener cuidado al asignar punteros de esta manera. Asegúrate de que la asignación de punteros sea coherente con la lógica de tu programa y que no cause errores o comportamientos inesperados.
+
+
+
+
+Herbert Mayorga
+entonces si ptr1 lo modificamos, tambien se modificara el ptr2?
+No, si modificas el valor de *ptr1 después de asignar ptr1 = ptr2, el valor de *ptr2 no cambiará automáticamente.
+
+Lo que sucede es que la asignación ptr1 = ptr2 hace que ptr1 apunte a la misma dirección de memoria que ptr2. Pero los punteros ptr1 y ptr2 siguen siendo dos variables diferentes con dos direcciones de memoria diferentes. Modificar el valor al que apunta *ptr1 no cambia el valor al que apunta *ptr2.
+
+Por ejemplo:
+
+c++
+Copy code
+int a = 10;
+int b = 20;
+int* ptr1 = &a;
+int* ptr2 = &b;
+
+ptr1 = ptr2;  // ptr1 apunta ahora a b
+
+*ptr1 = 30;   // cambia el valor de b a 30, pero no afecta a a
+*ptr2 = 40;   // cambia el valor de b a 40
+
+cout << a << endl;    // imprime "10"
+cout << b << endl;    // imprime "40"
+cout << *ptr1 << endl;  // imprime "40"
+cout << *ptr2 << endl;  // imprime "40"
+En este ejemplo, después de la asignación ptr1 = ptr2, ptr1 apunta a b, pero *ptr1 y *ptr2 todavía tienen valores diferentes. La modificación de *ptr1 y *ptr2 afecta sólo a la variable b y no a a.
+
+
+
+
+Herbert Mayorga
+por ejemplo, en este codigo, en la linea de Nodo* actual = *frente, "*frente" es estar accediendo al valor de la direccion de memoria, que es un puntero nodo, mismo objeto que "Nodo *" por lo cual, le estamos asignando un Nodo construido a un Nodo nuevo, llamado actual. Por lo cual, si modificamos el Nodo actual, se modificaria el nodo frente?
+
+void insertarColaOrdenada(Nodo** frente, Nodo** fin, string apellido, int edad) {
+    Nodo* nuevoNodo = new Nodo();
+    nuevoNodo->apellido = apellido;
+    nuevoNodo->edad = edad;
+    nuevoNodo->siguiente = NULL;
+
+    if (colaVacia(*frente) || edad >= (*frente)->edad) {
+        nuevoNodo->siguiente = *frente;
+        *frente = nuevoNodo;
+    } else {
+        Nodo* actual = *frente;
+        while (actual->siguiente != NULL && actual->siguiente->edad > edad) {
+            actual = actual->siguiente;
+        }
+        nuevoNodo->siguiente = actual->siguiente;
+        actual->siguiente = nuevoNodo;
+    }
+En la línea Nodo* actual = *frente;, la expresión *frente accede al valor del puntero que se está pasando como argumento a la función, que es la dirección de memoria del primer nodo en la cola. Como frente es un puntero doble, para acceder al valor del puntero, se usa el operador de indirección doble ** y luego el operador de indirección simple *.
+
+La variable actual es un puntero que apunta al mismo nodo que *frente. Es decir, actual y *frente apuntan a la misma dirección de memoria, que es la dirección de memoria del primer nodo en la cola.
+
+Sin embargo, actual es una variable diferente de *frente, y cualquier modificación que se haga en actual no afectará directamente a *frente. Por lo tanto, es seguro modificar actual sin afectar a *frente.
+
+En resumen, si modificas actual en este código, no modificarás directamente el nodo que apunta *frente. Ambas variables son punteros diferentes que apuntan a la misma dirección de memoria. Pero puedes modificar el nodo al que apunta *frente indirectamente, a través de actual y los punteros de los nodos en la cola.
+
+
+
+
+Herbert Mayorga
+pero porque no se modificaria si tienen la misma direccion de memoria?
+En el código que compartiste, actual y *frente apuntan a la misma dirección de memoria, lo que significa que apuntan al mismo objeto en la memoria. Si se modifica el objeto al que apunta actual, también se modificará el objeto al que apunta *frente.
+
+Sin embargo, es importante tener en cuenta que actual y *frente son dos punteros diferentes que se refieren al mismo objeto. Cada puntero es una variable diferente con su propia dirección de memoria.
+
+Cuando asignas Nodo* actual = *frente;, se está creando una nueva variable actual con su propia dirección de memoria. La dirección de memoria de actual es diferente de la dirección de memoria de *frente. Pero al asignar *frente a actual, ambos punteros apuntan al mismo objeto.
+
+Entonces, cualquier modificación que se haga en el objeto apuntado por actual se reflejará en el objeto apuntado por *frente. Pero si se modifica actual en sí mismo, eso no afectará a *frente, ya que son dos variables diferentes con direcciones de memoria diferentes.
+
+
+
+
+Herbert Mayorga
+ah vale, si se modifica lo que esta dentro del nodo, se modificaria el original?
+Sí, si se modifica el contenido del nodo al que apuntan tanto actual como *frente, se modificará el nodo original en la memoria. Ambos punteros apuntan al mismo nodo en la memoria, por lo que cualquier modificación que se haga en ese nodo a través de cualquiera de los dos punteros se reflejará en el mismo objeto en la memoria.
+
+En el código que compartiste, actual y *frente apuntan al mismo objeto de tipo Nodo. Si se modifica el contenido de actual o de *frente, se modificará el mismo objeto Nodo en la memoria. Por ejemplo, si se modifica el valor del miembro apellido de actual, se modificará el mismo miembro en el objeto Nodo al que apunta *frente.
+
+En resumen, cualquier modificación que se haga en el objeto apuntado por actual o por *frente se reflejará en el mismo objeto en la memoria.
