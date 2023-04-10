@@ -30,24 +30,33 @@ int adivinarNumero(int limiteInferior, int limiteSuperior) {
 
         // Comprueba si la entrada es un número válido
         char *p = entrada;
-        while (*p) {
-            if (!isdigit(*p)) {
+        while (*p) { // Mientras el caracter no sea el caracter nulo...:
+            if (!isdigit(*p)) { // Si el caracter no es digito...
+                // Significa que todo el string no es valido.
                 printf("Entrada invalida. Intentalo de nuevo\n");
                 break;
             }
+            // Si el caracter actual es válido, se pasa al siguiente
             p++;
         }
 
+        // Si el cáracter es el cáracter nulo, significa que terminó de recorrer el string y el while(*p) no se rompió.
         if (!*p) {
+            // Por lo tanto, si el string se recorrio por completo, el string son digitos, por lo cual se convierten a int
             numeroIngresado = atoi(entrada);
+            // Si el numero está fuera de rango, se sigue a la siguiente iteración del bucle infinito
+            // es decir, se reintenta...
             if (numeroIngresado < limiteInferior || numeroIngresado > limiteSuperior) {
                 printf("Fuera de rango. Intentalo de nuevo\n");
                 continue;
             }
+        // Si el cáracter no es el cáracter nulo, significa que algún caracter no es digito, por lo tanto no es valido
+        // En ese caso, el bucle infinito pasa a la siguiente iteración, se reintenta...
         } else {
             continue;
         }
 
+        // Si pasa todos los condicionales de buena manera, entonces empieza el juego...
         intentos++;
 
         if (numeroIngresado == numeroAleatorio) {
@@ -76,7 +85,7 @@ int main() {
 
     do {
         resultado = adivinarNumero(limiteInferior, limiteSuperior);
-    } while (resultado);
+    } while (resultado != 0);
 
     return 0;
 }
