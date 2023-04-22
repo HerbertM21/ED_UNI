@@ -1,15 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <string.h>
 #include <ctype.h>
+#include <time.h>
+
+int generarNumeroAleatorio(int limiteInferior, int limiteSuperior);
+int adivinarNumero(int limiteInferior, int limiteSuperior);
+
+int main() {
+    int limiteInferior, limiteSuperior;
+
+    printf("Ingrese el limite inferior: ");
+    scanf("%d", &limiteInferior);
+
+    printf("Ingrese el limite superior: ");
+    scanf("%d", &limiteSuperior);
+
+    srand(time(NULL));
+
+    int resultado = 1;
+
+    do {
+        resultado = adivinarNumero(limiteInferior, limiteSuperior);
+    } while (resultado != 0);
+
+    return 0;
+}
 
 int generarNumeroAleatorio(int limiteInferior, int limiteSuperior) {
-    // rand % 10 = Genera numeros desde el 0 hasta el 9
-    // rand % 10 + 1 = Genera numeros desde el 0 hasta el 10
-    // rand % (limiteSuperior - LimiteInferior) + LimiteInferior = Genera numeros desde el Limite inferior hasta el limite Superior - 1
-    // rand % (limiteSuperior - LimiteInferior + 1) + Limite Inferior = Genera numeros desde el Limite inferior hasta el limite Superior
-    return (rand() % (limiteSuperior - limiteInferior + 1)) + limiteInferior;
+    return rand() % (limiteSuperior - limiteInferior + 1) + limiteInferior;
 }
 
 int adivinarNumero(int limiteInferior, int limiteSuperior) {
@@ -27,25 +45,25 @@ int adivinarNumero(int limiteInferior, int limiteSuperior) {
         scanf("%s", entrada);
 
         // Comprueba si el usuario quiere salir
-        if (strcmp(entrada, "FIN") == 0 || strcmp(entrada, "fin") == 0) {
+        if (entrada[0] == 'F' && entrada[1] == 'I' && entrada[2] == 'N') {
             printf("Adios!\n");
             return 0;
         }
 
         // Comprueba si la entrada es un número válido
-        char *p = entrada;
-        while (*p) { // Mientras el caracter no sea el caracter nulo...:
-            if (!isdigit(*p)) { // Si el caracter no es digito...
+        int i = 0;
+        while (entrada[i]) { // Mientras el caracter no sea el caracter nulo...:
+            if (!isdigit(entrada[i])) { // Si el caracter no es digito...
                 // Significa que todo el string no es valido.
                 printf("Entrada invalida. Intentalo de nuevo\n");
                 break;
             }
             // Si el caracter actual es válido, se pasa al siguiente
-            p++;
+            i++;
         }
 
         // Si el cáracter es el cáracter nulo, significa que terminó de recorrer el string y el while(*p) no se rompió.
-        if (!*p) {
+        if (entrada[i] == '\0') {
             // Por lo tanto, si el string se recorrio por completo, el string son digitos, por lo cual se convierten a int
             numeroIngresado = atoi(entrada);
             // Si el numero está fuera de rango, se sigue a la siguiente iteración del bucle infinito
@@ -72,24 +90,4 @@ int adivinarNumero(int limiteInferior, int limiteSuperior) {
             printf("El numero buscado es menor\n");
         }
     }
-}
-
-int main() {
-    int limiteInferior, limiteSuperior;
-
-    printf("Ingrese el limite inferior: ");
-    scanf("%d", &limiteInferior);
-
-    printf("Ingrese el limite superior: ");
-    scanf("%d", &limiteSuperior);
-
-    srand(time(NULL));
-
-    int resultado = 1;
-
-    do {
-        resultado = adivinarNumero(limiteInferior, limiteSuperior);
-    } while (resultado != 0);
-
-    return 0;
 }
