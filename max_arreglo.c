@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int encontrarMaximo(int arreglo[], int tamano) {
+int encontrarMaximo(int arreglo[], size_t tamano) {
     int maximo = arreglo[0]; // Suponemos que el primer elemento es el máximo inicialmente
     
     for (int i = 1; i <= tamano; i++) {
@@ -14,7 +14,7 @@ int encontrarMaximo(int arreglo[], int tamano) {
 
 int main() {
     int arreglo[] = {5, 8, 3, 1, 10, 7};
-    int tamano = sizeof(arreglo) / sizeof(arreglo[0]);
+    size_t tamano = sizeof(arreglo) / sizeof(arreglo[0]);
     
     int maximo = encontrarMaximo(arreglo, tamano);
     
