@@ -159,9 +159,33 @@ int main(){
     return 0;
 
 }
+
 ```
 
-## **Complejidad lineal O(n log n)**
+El siguiente algoritmo es logaritmico porque se reduce el problema utilizando saltos largos, en este caso de 8 en 8 ``(i = i * 8)``
+
+Hay que tener en cuenta que una complejidad logaritmica siempre será determinada como tal cuando se reduzca el problema antes de llegar a n (tamaño de la entrada).
+
+#### **Logaritmico iterativo**
+
+```c
+
+#include <stdio.h>
+
+int main(){
+
+    int n = 5;
+  
+    for(int i = 1; i < n; i= i*8){
+        printf("i: %d\n", i);
+    }
+
+    return 0;
+
+}
+```
+
+## **Complejidad logaritmica lineal O(n log n)**
 
 Un código tiene complejidad ``O(n log n)`` cuando hay una estructura lineal dentro del proceso donde n disminuye y ese misma estructura lineal depende directa o indirectamente de n dado que i depende de n, y el bucle interior usando i, esta dependiendo indirectamente de n
 
@@ -197,13 +221,17 @@ int main(){
 
     int tamano = 10;
 
+    // Estructura logaritmica
     for(int i = 0; i < tamano; i++){
         tamano = tamano / 2;
+
+        // Estructura lineal
         for(j = 0; j < i; j++){
             // INSERTAR CODIGO
         }
     }
 
+    // Eso es igual a n log n
 
     return 0;
 }
