@@ -10,10 +10,10 @@ int main(){
   // el buffer tendrá un '\n', por lo cual al pedir otro caracter, ese '\n' queda sobrando y ocurriran problemas.
   // Se debe limpiar el buffer antes de pedir otro caracter, con getchar().
   printf("Ingrese el primer caracter: ");
-  scanf("%c", &caracter1,);
+  scanf("%c", &caracter1);
   printf("Ingrese el segundo caracter: ");
-  scanf("%c", &caracter2,);
+  scanf("%c", &caracter2);
   printf("Ingrese el tercero caracter: ");
-  scanf("%c", &caracter3,);
+  scanf("%c", &caracter3);
   return 0;  
 }

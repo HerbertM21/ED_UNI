@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-hacer esta bien?  int main(){
+int main(){
   
   char caracter;
   char caracter1;
